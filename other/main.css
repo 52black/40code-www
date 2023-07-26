@@ -86,3 +86,6 @@ pre > code {
     pointer-events: none;
     /* background-image: url(https://40code-cdn.zq990.com/static/internalapi/asset/f031e776a8e459081091cdf9bcee3307.svg); */
   }
+  .theme--light.v-application{
+    background: #f5f5f5!important;
+  }
