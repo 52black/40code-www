@@ -22,7 +22,7 @@ window.waitRequest = {}, window.scratch = {
         if ($('[name="extSelect"]')[i].checked) {
           try {
             if(!vm.extensionManager._loadedExtensions.get(extList[i].extId))
-            vm.extensionManager.loadExtensionURL('https://newsccode-1302921490.cos.ap-shanghai.myqcloud.com/ext/' + extList[i].extId + '.js')
+            vm.extensionManager.loadExtensionURL('https://40code-cdn.zq990.com/ext/' + extList[i].extId + '.js')
           } catch (error) {
             console.log(e)
           }

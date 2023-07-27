@@ -1337,7 +1337,7 @@
 			item: __webpack_require__(882),
 			host: {
 				data: "https://40code-cdn.zq990.com",
-				scratch: "https://newsccode-1302921490.cos-website.ap-shanghai.myqcloud.com"
+				scratch: "https://40code-cdn.zq990.com"
 			},
 			work: __webpack_require__(378),
 			lb: [{
