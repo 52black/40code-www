@@ -984,7 +984,7 @@
 		},
 		828: e => {
 			e.exports = function () {
-				v.stitle("40code少儿编程社区"), get({
+				v.stitle("40code创意编程社区"), get({
 					url: "work/index"
 				}, (function (e) {
 					v.$data.rows = e.data
@@ -1446,7 +1446,7 @@
 					cover: 0
 				},
 				worklist: 0,
-				title: "40code少儿编程社区",
+				title: "40code创意编程社区",
 				getQueryString,
 				stitle: e => {
 					document.title = (e || v.title) + "  -40code", e && (v.title = e)
