@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+</head>
+
+<body>
+    <script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./js/app.js"></script>
+    <script>
+        function getQueryString(name) {
+            let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            if (top.location.search.indexOf("?") < 0) return null;
+            let r = top.location.search.split("?")[1].match(reg);
+            if (r != null) return decodeURIComponent(r[2]);
+            return null;
+        }
+        post( {
+            url:'user/3p2',
+            data: {
+                code: getQueryString('code'),
+                type: getQueryString('type')
+            }
+        }, (data) => {
+            if(data.token){
+                setCookie("token", data.token, 30)
+            }
+            // if(data.msg){
+            //     alert(data.msg)
+            // }
+            if(data.url)
+            location.href = data.url;
+        })
+    </script>
+</body>
+
+</html>
