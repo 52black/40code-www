@@ -116,6 +116,12 @@ function getQueryString(name) {
                         eee(e)
                     else
                         alert(e && e.responseJSON && (e.responseJSON.msg || e.responseJSON.errmsg) || "服务器或网络错误")
+                    if(e.status==0 && e.statusText=='error' && !window.qf){
+                      window.qf=1;
+                      if(location.pathname=='/')
+                      location.href=("#page=qf")
+                      return;
+                    }
                     if (e.responseJSON.redirect) {
                         location.href = e.responseJSON.redirect;
                         return;
@@ -157,6 +163,12 @@ function getQueryString(name) {
                     console.log(e)
                     if (eee) eee(e)
                     else alert(e && e.responseJSON && (e.responseJSON.msg || e.responseJSON.errmsg) || "服务器或网络错误")
+                    if(e.status==0 && e.statusText=='error' && !window.qf){
+                      window.qf=1;
+                      if(location.pathname=='/')
+                      location.href=("#page=qf")
+                      return;
+                    }
                     if (e.responseJSON.redirect) {
                         location.href = e.responseJSON.redirect;
                         return;

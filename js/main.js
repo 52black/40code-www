@@ -1417,7 +1417,7 @@
 				},
 				qh2: () => {
 					let e = getQueryString("page");
-					e ? -1 != ["index", "sign", "account", "mywork", "work", "workinfo", "user", "message", "search", "flist", "mystudio", "studio", "studio_edit", "about", "forum", "post", "myitem", "sc"].indexOf(e) || (e = "404") : e = "index", v.$data.qh3(e, getQueryString("id"))
+					e ? -1 != ["index", "sign", "account", "mywork", "work", "workinfo", "user", "message", "search", "flist", "mystudio", "studio", "studio_edit", "about", "forum", "post", "myitem", "sc",'qf'].indexOf(e) || (e = "404") : e = "index", v.$data.qh3(e, getQueryString("id"))
 				},
 				sb: {
 					show: !1,
