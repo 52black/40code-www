@@ -120,7 +120,7 @@ function getQueryString(name) {
                       if(!window.qf)window.qf=0;
                       window.qf++;
                      
-                      if(location.pathname=='/' && window.qf==5)
+                      if(location.pathname=='/' && window.qf==3)
                       fetch('/111').then(d=>{
                         if(d.status)location.href=("#page=qf")
                       })
@@ -175,7 +175,7 @@ function getQueryString(name) {
                     if(e.status==0 && e.statusText=='error'){
                       if(!window.qf)window.qf=0;
                       window.qf++;
-                      if(location.pathname=='/' && window.qf==5)
+                      if(location.pathname=='/' && window.qf==3)
                       fetch('/111').then(d=>{
                         if(d.status)location.href=("#page=qf")
                       })
