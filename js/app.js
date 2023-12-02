@@ -119,8 +119,12 @@ function getQueryString(name) {
                     if(e.status==0 && e.statusText=='error'){
                       if(!window.qf)window.qf=0;
                       window.qf++;
+                     
                       if(location.pathname=='/' && window.qf==5)
-                      location.href=("#page=qf")
+                      fetch('/111').then(d=>{
+                        if(d.status)location.href=("#page=qf")
+                      })
+                      
                       return;
                     }
                     if (e.responseJSON.redirect) {
@@ -130,6 +134,10 @@ function getQueryString(name) {
                 }
             })
         }
+        setInterval(()=>{
+          if(!window.qf)window.qf=0;
+          else window.qf--;
+        },500)
         function post(d, n, eee, method) {
             let d2 = d.data;
             if (d.p) {
@@ -168,7 +176,9 @@ function getQueryString(name) {
                       if(!window.qf)window.qf=0;
                       window.qf++;
                       if(location.pathname=='/' && window.qf==5)
-                      location.href=("#page=qf")
+                      fetch('/111').then(d=>{
+                        if(d.status)location.href=("#page=qf")
+                      })
                       return;
                     }
                     if (e.responseJSON.redirect) {
