@@ -239,7 +239,8 @@
 										.val(),
 									context: $("#fcontext")
 										.val(),
-									sid: getQueryString("sid")
+									sid: getQueryString("sid"),
+									public:$('#fpublic').prop('checked')
 								}
 							}, (function (e) {
 								v.forum.sending = 0, v.forum.dialog = !1, location.href += "&t", alert(e.msg)
