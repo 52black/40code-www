@@ -116,9 +116,10 @@ function getQueryString(name) {
                         eee(e)
                     else
                         alert(e && e.responseJSON && (e.responseJSON.msg || e.responseJSON.errmsg) || "服务器或网络错误")
-                    if(e.status==0 && e.statusText=='error' && !window.qf){
-                      window.qf=1;
-                      if(location.pathname=='/')
+                    if(e.status==0 && e.statusText=='error'){
+                      if(!window.qf)window.qf=0;
+                      window.qf++;
+                      if(location.pathname=='/' && window.qf==5)
                       location.href=("#page=qf")
                       return;
                     }
@@ -163,9 +164,10 @@ function getQueryString(name) {
                     console.log(e)
                     if (eee) eee(e)
                     else alert(e && e.responseJSON && (e.responseJSON.msg || e.responseJSON.errmsg) || "服务器或网络错误")
-                    if(e.status==0 && e.statusText=='error' && !window.qf){
-                      window.qf=1;
-                      if(location.pathname=='/')
+                    if(e.status==0 && e.statusText=='error'){
+                      if(!window.qf)window.qf=0;
+                      window.qf++;
+                      if(location.pathname=='/' && window.qf==5)
                       location.href=("#page=qf")
                       return;
                     }
