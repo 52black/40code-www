@@ -122,15 +122,15 @@
 						Vue.set(v.comment, "comment", t), setTimeout(v.comment.b, 300), console.log("获取评论", e);
 						setTimeout(() => {
 							for (let i = 0; i < t.pendant.length; i++) {
-									let s = 'url(https://40code-cdn.zq990.com/static/internalapi/asset/' + t.pendant[i].thumbId + ')'
-									let c=$('.avatar2.id' + t.pendant[i].useid)
+								let s = 'url(https://40code-cdn.zq990.com/static/internalapi/asset/' + t.pendant[i].thumbId + ')'
+								let c = $('.avatar2.id' + t.pendant[i].useid)
 									.css('background-image')
-									if (c)
-										$('.avatar2.id' + t.pendant[i].useid)
-											.css('background-image', c+','+s)
-									else
-										$('.avatar2.id' + t.pendant[i].useid)
-											.css('background-image', s)
+								if (c)
+									$('.avatar2.id' + t.pendant[i].useid)
+										.css('background-image', c + ',' + s)
+								else
+									$('.avatar2.id' + t.pendant[i].useid)
+										.css('background-image', s)
 							}
 						}, 100)
 					}))
@@ -240,7 +240,7 @@
 									context: $("#fcontext")
 										.val(),
 									sid: getQueryString("sid"),
-									public:$('#fpublic').prop('checked')
+									public: $('#fpublic').prop('checked')
 								}
 							}, (function (e) {
 								v.forum.sending = 0, v.forum.dialog = !1, location.href += "&t", alert(e.msg)
@@ -355,7 +355,7 @@
 						v.item.workItems = e.data.filter(e => e.item.category !== 'Pendant')
 						v.user.Pendant = e.data.filter(e => e.item.category == 'Pendant')
 						$('.avatar.id' + v.workview.id)
-								.css('background-image', '')
+							.css('background-image', '')
 						if (v.user.Pendant.length) {
 							let s = ""
 							for (let i = 0; i < v.user.Pendant.length; i++) {
@@ -446,7 +446,7 @@
 				c: function () {
 					document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.40code.com";
 					document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-					 console.log("清除cookie"), location.href = ""
+					console.log("清除cookie"), location.href = ""
 				}
 			}]
 		},
@@ -769,11 +769,11 @@
 							setCookie('darkmode', '0', 999)
 					}, 100)
 				},
-				getCoins: d=>{
-					get('user/records',function(d){
-						let s='';
-						for(let i=0;i<d.length;i++){
-							s+=`<br>
+				getCoins: d => {
+					get('user/records', function (d) {
+						let s = '';
+						for (let i = 0; i < d.length; i++) {
+							s += `<br>
 							<span class="body-1 text--primary">${d[i].note}</span><br>
 							<span class="body-2" style="margin-top:-5px">
 							<span class="primary--text">${d[i].coin_count}</span>
@@ -787,7 +787,7 @@
 						</div>
 						`)
 					})
-					
+
 				},
 				delmsg: e => {
 					post({
@@ -1309,30 +1309,76 @@
 					return console.log(t), e
 				}
 			}
-		}), window.markdownToHtml = e => DOMPurify.sanitize(marked.parse(e)), window.pagecz = {
-			index: __webpack_require__(828),
-			search: __webpack_require__(116),
-			sign: __webpack_require__(253),
-			mywork: __webpack_require__(715),
-			mystudio: __webpack_require__(209),
-			work: __webpack_require__(960),
-			workinfo: __webpack_require__(516),
-			user: __webpack_require__(534),
-			account: __webpack_require__(104),
-			message: __webpack_require__(251),
-			flist: __webpack_require__(174),
-			studio: __webpack_require__(758),
-			studio_edit: __webpack_require__(811),
-			forum: () => {
-				v.forum.getlist()
-			},
-			post: () => {
-				v.forum.post.get()
-			},
-			myitem: () => {
-				v.item.get(), getuserinfo()
+		}), window.markdownToHtml = e => {
+			function modifyBilibiliTags(htmlString) {
+				const imgRegex = /<img(?:[^>]*\salt="iframe"[^>]*)>/gi;
+
+				const imgMatches = htmlString.match(imgRegex);
+
+				if (imgMatches) {
+					for (const imgTag of imgMatches) {
+						const srcRegex = /src=["']([^"']+)["']/i;
+						const srcMatch = imgTag.match(srcRegex);
+
+						if (srcMatch) {
+							let originalSrc = srcMatch[1];
+
+							// 替换 &amp; 为普通的 &
+							originalSrc = originalSrc.replace(/&amp;/g, '&');
+							console.log(originalSrc)
+							const bvidRegex = /\/BV([a-zA-Z0-9]+)\//i;
+							const bvidMatch = originalSrc.match(bvidRegex);
+							if (originalSrc.includes('player.bilibili.com')) {
+								newTag = `<iframe src="${originalSrc}" allowfullscreen="allowfullscreen" width="100%" height="500" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>`;
+								htmlString = htmlString.replace(imgTag, newTag);
+							} else if (bvidMatch) {
+								const bvid = bvidMatch[1];
+
+								let newTag = '';
+								if (originalSrc.includes('www.bilibili.com')) {
+									const newSrc = `//player.bilibili.com/player.html?bvid=${bvid}&page=1&high_quality=1&danmaku=0`;
+									newTag = `<iframe src="${newSrc}" allowfullscreen="allowfullscreen" width="100%" height="500" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>`;
+								}
+
+								htmlString = htmlString.replace(imgTag, newTag);
+							}
+						}
+					}
+				}
+
+				return htmlString;
 			}
-		};
+
+
+			let d = DOMPurify.sanitize(marked.parse(e))
+			if (d.indexOf('iframe') == -1) return d;
+			console.log('问问', d, modifyBilibiliTags(d))
+			return modifyBilibiliTags(d)
+		},
+			window.pagecz = {
+				index: __webpack_require__(828),
+				search: __webpack_require__(116),
+				sign: __webpack_require__(253),
+				mywork: __webpack_require__(715),
+				mystudio: __webpack_require__(209),
+				work: __webpack_require__(960),
+				workinfo: __webpack_require__(516),
+				user: __webpack_require__(534),
+				account: __webpack_require__(104),
+				message: __webpack_require__(251),
+				flist: __webpack_require__(174),
+				studio: __webpack_require__(758),
+				studio_edit: __webpack_require__(811),
+				forum: () => {
+					v.forum.getlist()
+				},
+				post: () => {
+					v.forum.post.get()
+				},
+				myitem: () => {
+					v.item.get(), getuserinfo()
+				}
+			};
 		let e = {
 			rules: __webpack_require__(115),
 			item: __webpack_require__(882),
@@ -1418,7 +1464,7 @@
 				},
 				qh2: () => {
 					let e = getQueryString("page");
-					e ? -1 != ["index", "sign", "account", "mywork", "work", "workinfo", "user", "message", "search", "flist", "mystudio", "studio", "studio_edit", "about", "forum", "post", "myitem", "sc",'qf'].indexOf(e) || (e = "404") : e = "index", v.$data.qh3(e, getQueryString("id"))
+					e ? -1 != ["index", "sign", "account", "mywork", "work", "workinfo", "user", "message", "search", "flist", "mystudio", "studio", "studio_edit", "about", "forum", "post", "myitem", "sc", 'qf'].indexOf(e) || (e = "404") : e = "index", v.$data.qh3(e, getQueryString("id"))
 				},
 				sb: {
 					show: !1,
