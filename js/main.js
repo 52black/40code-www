@@ -1329,7 +1329,10 @@
 							const bvidRegex = /\/BV([a-zA-Z0-9]+)\//i;
 							const bvidMatch = originalSrc.match(bvidRegex);
 							if (originalSrc.includes('player.bilibili.com')) {
-								newTag = `<iframe src="${originalSrc}" allowfullscreen="allowfullscreen" width="100%" height="500" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>`;
+								newTag = `<iframe src="${originalSrc}" allowfullscreen="allowfullscreen" style="
+								width: min( 100% ,700px );
+								height: 400px;
+							" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>`;
 								htmlString = htmlString.replace(imgTag, newTag);
 							} else if (bvidMatch) {
 								const bvid = bvidMatch[1];
@@ -1337,7 +1340,10 @@
 								let newTag = '';
 								if (originalSrc.includes('www.bilibili.com')) {
 									const newSrc = `//player.bilibili.com/player.html?bvid=${bvid}&page=1&high_quality=1&danmaku=0`;
-									newTag = `<iframe src="${newSrc}" allowfullscreen="allowfullscreen" width="100%" height="500" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>`;
+									newTag = `<iframe src="${newSrc}" allowfullscreen="allowfullscreen" style="
+									width: min( 100% ,700px );
+									height: 400px;
+								" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>`;
 								}
 
 								htmlString = htmlString.replace(imgTag, newTag);
