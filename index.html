@@ -5,8 +5,23 @@
         <v-icon v-else>mdi-white-balance-sunny</v-icon>
     </v-btn><span v-if="detail"><v-btn icon href="#page=message"><span v-if="detail && detail.msgnum"><v-badge color="red" :content="detail.msgnum" overlap><v-icon>mdi-bell</v-icon></v-badge></span><v-icon v-else>mdi-bell</v-icon></v-btn><v-menu><template v-slot:activator="{ on, attrs }"><v-btn color="rgba(128,128,128,.06)" dark v-bind="attrs" v-on="on" class="sd" style="text-transform:none!important"><v-avatar size="20" class="mr-2"><img :src="host.data+'/static/internalapi/asset/'+(detail.head || '6e2b0b1056aaa08419fb69a3d7aa5727.png')"></v-avatar>{{ detail.nickname }}</v-btn></template><v-list><v-list-item v-for="(item, index) in items" :key="index" @click="() => {}" v-on:click="item.c()"><v-list-item-title>{{ item.title }}</v-list-item-title></v-list-item></v-list></v-menu></span><v-toolbar-title v-else-if="detail===undefined"><a v-on:click="sign.go()" target="_self"><v-btn color="rgb(52,130,207)" class="sd">登录/注册</v-btn></a></v-toolbar-title></v-app-bar><v-main><v-container v-if="viewmode=='404'"><v-row><v-col class="mx-auto"><v-card class="sd mx-auto pa-8 my-12">当前页面不存在 404 not found</v-card></v-col></v-row></v-container>
         <v-container v-if="viewmode=='about'"><v-row><v-col class="mx-auto"><v-card class="mx-auto pa-8 my-12"><h1>关于我们：</h1>40code是由网名为what的人开发的一款在线少儿编程平台，基于Scratch开发，支持手机端作品展示。</v-card></v-col></v-row></v-container>
+
+        <v-container v-if="viewmode=='ue'"><v-row><v-col class="mx-auto"><v-card class="mx-auto pa-8 my-12">
+            <v-file-input
+                accept="accept='.js'"
+                label="扩展文件"
+                max-length="100"
+                id="extf"
+            ></v-file-input>
+            <v-text-field label="扩展名称" id="extn"></v-text-field>
+            <v-text-field label="扩展id" id="extid"></v-text-field>
+            <v-text-field label="作者名称" id="extan"></v-text-field>
+            <v-btn elevation="2" @click="work.ue">点击上传</v-btn>
+        </v-card></v-col></v-row>
+        </v-container>
+        
         <v-container v-if="viewmode=='qf'"><v-row><v-col class="mx-auto"><v-card class="mx-auto pa-8 my-12">
-            <h1>网站因云服务商余额不足暂时关闭，你可以赞助我们以支持网站运行，谢谢你们！预计一周内恢复</h1>
+            <h1>出现此页面原因的可能是：云服务商余额不足。你可以赞助我们以支持网站运行，谢谢你们！预计一周内恢复</h1>
             <v-row>
                 <v-col cols="12" sm="6" md="4" lg="3">
                     <v-img src="./static/zz/zz2.jpg" max-width="300"></v-img><br>

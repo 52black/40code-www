@@ -873,6 +873,41 @@
 						alert(e.msg), v.workview.islike ? v.workview.like-- : v.workview.like++, v.workview.islike = !v.workview.islike
 					}))
 				},
+				ue: () => {
+					// 获取文件输入框中的文件
+					var fileInput = $('#extf')[0];
+					var file = fileInput.files[0];
+
+					// 构建一个查询字符串，包含需要作为URL参数的值
+					var queryString = $.param({
+						token: getCookie('token'),
+						name: $('#extn').val(),
+						author: $('#extan').val(),
+						id: $('#extid').val()
+					});
+
+					// 创建一个 FormData 对象并添加文件
+					var formData = new FormData();
+					formData.append('file', file);
+
+					// 发起带有 URL 参数的 POST 请求
+					$.ajax({
+						url: 'https://service-dq726wx5-1302921490.sh.apigw.tencentcs.com/work/upload-ext?' + queryString,
+						type: 'POST',
+						data: formData,
+						processData: false, // 告诉jQuery不要去处理发送的数据
+						contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+						success: function (response) {
+							// 请求成功后的回调函数
+							console.log('文件上传成功:', response);
+							dialog(response)
+						},
+						error: function (xhr, status, error) {
+							// 请求失败后的回调函数
+							console.error('文件上传失败:', error);
+						}
+					});
+				},
 				del: e => {
 					confirm("你确定要删除此作品吗") && post({
 						url: "work/delete",
@@ -1470,7 +1505,7 @@
 				},
 				qh2: () => {
 					let e = getQueryString("page");
-					e ? -1 != ["index", "sign", "account", "mywork", "work", "workinfo", "user", "message", "search", "flist", "mystudio", "studio", "studio_edit", "about", "forum", "post", "myitem", "sc", 'qf'].indexOf(e) || (e = "404") : e = "index", v.$data.qh3(e, getQueryString("id"))
+					e ? -1 != ["index", "sign", "account", "mywork", "work", "workinfo", "user", "message", "search", "flist", "mystudio", "studio", "studio_edit", "about", "forum", "post", "myitem", "sc", 'qf', 'ue'].indexOf(e) || (e = "404") : e = "index", v.$data.qh3(e, getQueryString("id"))
 				},
 				sb: {
 					show: !1,
