@@ -1,28 +1,46 @@
 apihost = "https://service-dq726wx5-1302921490.sh.apigw.tencentcs.com/";
 window.waitRequest = {}, window.scratch = {
+  search:(value)=>{
+    let d=$('#mdl')[0].children
+    for(let i=1;i<d.length;i++){
+      console.log(d[i])
+      ($(d[i]).attr('text1').indexOf(value)==-1)?
+        $(d[i]).hide():$(d[i]).show()
+    }
+  },
   alertLoadExt: async () => {
     let context = `请选择：<br>
-    <div class="mdui-list">`;
+    <div class="mdui-list" id="mdl">
+    <div class="mdui-textfield mdui-textfield-floating-label">
+      <label class="mdui-textfield-label">名称/作者</label>
+      <input class="mdui-textfield-input" oninput="window.scratch.search(this.value)" onporpertychange="window.scratch.search(this.value)" onchange="window.scratch.search(this.value)"/>
+    </div>
+    `;
     let extList = await ((await fetch(apihost + 'work/ext')).json())
+    window.scratch.extList=extList
     for (let i = 0; i < extList.length; i++) {
       let j = extList[i];
       context += `
-      <label class="mdui-list-item mdui-ripple">
+      <label class="mdui-list-item mdui-ripple" id="itemn${i}" text1="${j.name+'-'+j.author}">
         <div class="mdui-checkbox">
           <input name="extSelect" type="checkbox" ${vm.extensionManager._loadedExtensions.get(j.extId) ? 'checked' : ''}/>
           <i class="mdui-checkbox-icon"></i>
         </div>
-        <div class="mdui-list-item-content">${j.name}<span class="mdui-float-right" style="color:#777;font-size:10px;">${j.author}</span></div>
+        <div class="mdui-list-item-content" >${j.name}<span class="mdui-float-right" style="color:#777;font-size:10px;">${j.author}</span></div>
       </label>
         `
     }
     context += "</div>"
-    mdui.alert(context, () => {
+    mdui.alert(context, async () => {
       for (let i = 0; i < extList.length; i++) {
         if ($('[name="extSelect"]')[i].checked) {
           try {
-            if(!vm.extensionManager._loadedExtensions.get(extList[i].extId))
-            vm.extensionManager.loadExtensionURL('https://40code-cdn.zq990.com/ext/' + extList[i].extId + '.js')
+            if (!vm.extensionManager._loadedExtensions.get(extList[i].extId))
+              vm.extensionManager.loadExtensionURL('https://40code-cdn.zq990.com/ext/' + extList[i].extId + '.js')
+            // if (window.tempExt) {
+            //   Scratch.extensions.register(new (window.tempExt.Extension)(vm.runtime))
+            //   window.tempExt = 0;
+            // }
           } catch (error) {
             console.log(e)
           }
@@ -31,29 +49,29 @@ window.waitRequest = {}, window.scratch = {
     })
   },
   uploadExt: async () => {
-      var d = document.createElement('input');
-      d.type = "file";
-      d.accept=".js";
-      d.click();
-      var int = setInterval(() => {
-        if (!d.files.length) {
-          return;
+    var d = document.createElement('input');
+    d.type = "file";
+    d.accept = ".js";
+    d.click();
+    var int = setInterval(() => {
+      if (!d.files.length) {
+        return;
+      }
+      var reader = new FileReader();//新建⼀个FileReader
+      clearInterval(int)
+      try {
+        reader.readAsText(d.files[0])
+        reader.onload = function (evt) { //读取完⽂件之后会回来这⾥
+          // var fileString = evt.target.result; // 读取⽂件内容
+          // vm.extensionManager.loadExtensionURL({data:fileString})
+          var fileString = new Blob([evt.target.result]); // 读取⽂件内容
+          vm.extensionManager.loadExtensionURL(URL.createObjectURL(fileString))
         }
-        var reader = new FileReader();//新建⼀个FileReader
-        clearInterval(int)
-        try {
-          reader.readAsText(d.files[0])
-          reader.onload = function (evt) { //读取完⽂件之后会回来这⾥
-            // var fileString = evt.target.result; // 读取⽂件内容
-            // vm.extensionManager.loadExtensionURL({data:fileString})
-            var fileString = new Blob([evt.target.result]); // 读取⽂件内容
-            vm.extensionManager.loadExtensionURL(URL.createObjectURL(fileString))
-          }
-        } catch (error) {
-          resolve('')
-          console.log(error)
-        }
-      }, 50)
+      } catch (error) {
+        resolve('')
+        console.log(error)
+      }
+    }, 50)
   }
 };
 var temp2 = {
@@ -328,7 +346,7 @@ async function saveproject(id, callback, Open) {
       contentType: false,
       processData: false,
       dataType: 'json',
-      headers:{'onreferer': location.pathname, 'href': location.href,'publish':Open || undefined},
+      headers: { 'onreferer': location.pathname, 'href': location.href, 'publish': Open || undefined },
       // 图片上传成功
       success: function (result1) {
         if (result1.code != 1) {
@@ -339,11 +357,11 @@ async function saveproject(id, callback, Open) {
         hy();
         $(window).unbind('beforeunload');
         window.onbeforeunload = null;
-        let vvv="";
-        try{
-          vvv=$('.input_input-form_2EIqD.project-title-input_title-field_13MIs.menu-bar_title-field-growable_2DAmE').val()
-        }catch(e){
-          
+        let vvv = "";
+        try {
+          vvv = $('.input_input-form_2EIqD.project-title-input_title-field_13MIs.menu-bar_title-field-growable_2DAmE').val()
+        } catch (e) {
+
         }
         Open && (location.href = ("/#page=workinfo&publish=1&id=" + workinfo.id + '&name=' + vvv))
         $("#saveProject").text('作品保存成功')
@@ -429,11 +447,11 @@ async function saveproject(id, callback, Open) {
     }
     return objArr;
   }
- function sleep(time){
-    return new Promise(resolve=>{
-        setTimeout(()=>resolve(),time)
+  function sleep(time) {
+    return new Promise(resolve => {
+      setTimeout(() => resolve(), time)
     })
- }
+  }
   function aftercheck() {
     if (data2.length) {
       // $("#loadinfo").html('正在保存素材');
@@ -456,7 +474,7 @@ async function saveproject(id, callback, Open) {
     // debugger;
     if (!list.length) resolve([])
     for (let i = 0; i < list.length; i++) {
-    //   debugger;
+      //   debugger;
       post({
         url: 'work/imagelist',
         data: { list: list[i] }
@@ -470,7 +488,7 @@ async function saveproject(id, callback, Open) {
       }, (d) => {
         resolve(null)
       })
-      if(i!=list.length-1) await sleep(4000)
+      if (i != list.length - 1) await sleep(4000)
     }
 
   });
