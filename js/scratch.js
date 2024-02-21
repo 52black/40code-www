@@ -3,7 +3,7 @@ window.waitRequest = {}, window.scratch = {
   search:(value)=>{
     let d=$('#mdl')[0].children
     for(let i=1;i<d.length;i++){
-      console.log(d[i])
+      console.log(d[i]);
       ($(d[i]).attr('text1').indexOf(value)==-1)?
         $(d[i]).hide():$(d[i]).show()
     }
