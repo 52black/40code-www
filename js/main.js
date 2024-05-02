@@ -122,7 +122,7 @@
 						Vue.set(v.comment, "comment", t), setTimeout(v.comment.b, 300), console.log("获取评论", e);
 						setTimeout(() => {
 							for (let i = 0; i < t.pendant.length; i++) {
-								let s = 'url(https://40code-cdn.zq990.com/static/internalapi/asset/' + t.pendant[i].thumbId + ')'
+								let s = 'url(https://abc.520gxx.com/static/internalapi/asset/' + t.pendant[i].thumbId + ')'
 								let c = $('.avatar2.id' + t.pendant[i].useid)
 									.css('background-image')
 								if (c)
@@ -359,7 +359,7 @@
 						if (v.user.Pendant.length) {
 							let s = ""
 							for (let i = 0; i < v.user.Pendant.length; i++) {
-								s += 'url(https://40code-cdn.zq990.com/static/internalapi/asset/' + v.user.Pendant[i].item.thumbId2 + ')'
+								s += 'url(https://abc.520gxx.com/static/internalapi/asset/' + v.user.Pendant[i].item.thumbId2 + ')'
 								if (i < v.user.Pendant.length - 1) s += ','
 							}
 							$('.avatar.id' + v.workview.id)
@@ -1424,8 +1424,8 @@
 			rules: __webpack_require__(115),
 			item: __webpack_require__(882),
 			host: {
-				data: "https://40code-cdn.zq990.com",
-				scratch: "https://40code-cdn.zq990.com"
+				data: "https://abc.520gxx.com",
+				scratch: "https://abc.520gxx.com"
 			},
 			work: __webpack_require__(378),
 			lb: [{
@@ -1472,7 +1472,7 @@
 									dataType: "json",
 									success: function (e) {
 										let t = e.data[2][0][1].Key.split("/"),
-											i = "![](https://40code-cdn.zq990.com/static/internalapi/asset/" + t[t.length - 1] + ")";
+											i = "![](https://abc.520gxx.com/static/internalapi/asset/" + t[t.length - 1] + ")";
 										o.lazyValue = o.internalValue = o.value = o.value.substring(0, n.selectionStart) + i + o.value.substring(n.selectionEnd, o.value.length)
 									},
 									error: function () {

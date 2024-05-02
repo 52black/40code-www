@@ -194,4 +194,4 @@ function getQueryString(name) {
   }
   var apihost = "https://service-dq726wx5-1302921490.sh.apigw.tencentcs.com/",
   mianhost="http://127.0.0.1:5500",
-  scratchhost="https://40code-cdn.zq990.com";
+  scratchhost="https://abc.520gxx.com";

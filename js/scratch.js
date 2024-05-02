@@ -36,7 +36,7 @@ window.waitRequest = {}, window.scratch = {
         if ($('[name="extSelect"]')[i].checked) {
           try {
             if (!vm.extensionManager._loadedExtensions.get(extList[i].extId))
-              vm.extensionManager.loadExtensionURL('https://40code-cdn.zq990.com/ext/' + extList[i].extId + '.js')
+              vm.extensionManager.loadExtensionURL('https://abc.520gxx.com/ext/' + extList[i].extId + '.js')
             // if (window.tempExt) {
             //   Scratch.extensions.register(new (window.tempExt.Extension)(vm.runtime))
             //   window.tempExt = 0;
